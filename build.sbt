@@ -1,4 +1,4 @@
-name := "scala_sbt_sprintboot"
+name := "scala_sbt_springboot"
 
 version := "1.0"
 
