@@ -5,6 +5,8 @@
     <title>greeting</title>
 </head>
 <body>
-<p>Hey ${name}, what's up man! </p>
+<p>Hey $abc, what's up man! </p>
+<h1 data-th-text="$name">this gets replaced</h1>
+<h2>WORLD</h2>
 </body>
 </html>

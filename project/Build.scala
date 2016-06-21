@@ -1,8 +1,6 @@
-import com.github.retronym.SbtOneJar
+import com.github.retronym.SbtOneJar._
 import sbt.Keys._
 import sbt._
-import com.github.retronym.SbtOneJar.oneJar
-import com.github.retronym.SbtOneJar.oneJarSettings
 
 object Build extends Build {
   override lazy val settings = super.settings :+ {
@@ -55,9 +53,10 @@ object Build extends Build {
         _springBootStarterTest,
         _jacksonScalaModule),
 
-//      exportJars := true,
+
+      exportJars := true,
       mainClass in oneJar := Some("me.vincentzz.demo.HelloWorld"),
-      Seq(com.github.retronym.SbtOneJar.oneJarSettings: _*),
+      Seq(oneJarSettings: _*),
       mappings in oneJar += (file("src/main/resources/web/*.html"),"./")
     )
 }
