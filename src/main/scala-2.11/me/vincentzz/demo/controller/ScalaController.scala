@@ -62,22 +62,11 @@ class ScalaController {
 
   //TODO not working now
   @RequestMapping(value = Array("/greeting") , method = Array(RequestMethod.GET))
-  def greeting (@RequestParam(value = "name", required = false, defaultValue = "zz") name: String, model : Model) : String = {
+  def greeting (@RequestParam(value = "name", required = false, defaultValue = "zz") name: String, model : Model) = {
     model.addAttribute("abc", name)
 
     //returning the view name, by default it will same as mapping url
     //in this case is "greeting"
-    "greeting"
-  }
-
-  @RequestMapping(value = Array("/greeting2") , method = Array(RequestMethod.GET))
-  def greeting2 (@RequestParam(value = "name", required = false, defaultValue = "zz") name: String) : ModelAndView = {
-    val mav = new ModelAndView
-    mav.setViewName("greeting")
-    mav.addObject("abc", name)
-
-    //returning the view name, by default it will same as mapping url
-    //in this case is "greeting"
-    mav
+    //"greeting"
   }
 }

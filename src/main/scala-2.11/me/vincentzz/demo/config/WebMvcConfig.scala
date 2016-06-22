@@ -15,29 +15,21 @@ import org.springframework.web.servlet.view.velocity.VelocityViewResolver
 @Configuration
 //@EnableWebMvc
 class WebMvcConfig extends WebMvcConfigurerAdapter {
-  val CLASSPATH_RESOURCE_LOCATIONS = Array("classpath:/META-INF/resources/", "classpath:/resources/",
-    "classpath:/templates/", "classpath:/public/","classpath:/")
+  val CLASSPATH_RESOURCE_LOCATIONS = Array("classpath:/web/",
+    "classpath:/public/", "classpath:/static/")
 
-  override def configureMessageConverters(converters: java.util.List[HttpMessageConverter[_]]) {
-    converters.add(jackson2HttpMessageConverter)
-    converters.add(stringHttpMessageConverter)
-  }
-
-//  @Bean def velocityViewResolver: VelocityViewResolver = {
-//    val velocityViewResolver = new VelocityViewResolver
-////    velocityViewResolver.setPrefix("/templates/")
-//    velocityViewResolver.setSuffix(".vm")
-//    velocityViewResolver
+//  override def configureMessageConverters(converters: java.util.List[HttpMessageConverter[_]]) {
+//    converters.add(jackson2HttpMessageConverter)
+//    converters.add(stringHttpMessageConverter)
 //  }
 
-
-  @Bean def getViewResolver: ViewResolver = {
-      val resolver:InternalResourceViewResolver = new InternalResourceViewResolver()
-//      resolver.setViewClass(classOf[JstlView])
-      resolver.setPrefix("/templates/")
-      resolver.setSuffix(".vm")
-      resolver
-    }
+  //overwrite the default velocityViewResolver
+  @Bean def velocityViewResolver: VelocityViewResolver = {
+    val velocityViewResolver = new VelocityViewResolver
+    velocityViewResolver.setPrefix("/templates/")
+    velocityViewResolver.setSuffix(".vm")
+    velocityViewResolver
+  }
 
   // replace the springBoot default objectMapper which is customized for java
   @Bean def jackson2HttpMessageConverter: MappingJackson2HttpMessageConverter = {
@@ -45,7 +37,7 @@ class WebMvcConfig extends WebMvcConfigurerAdapter {
     converter.setObjectMapper(new Jackson2ObjectMapperBuilder().modules(DefaultScalaModule).build())
     converter
   }
-  // mandatory force the charset to utf-8 for web project
+  // replace springBoot default stringHttpMessageConverter
   @Bean def stringHttpMessageConverter: StringHttpMessageConverter = {
     new StringHttpMessageConverter(Charset.forName("UTF-8"))
   }
@@ -54,7 +46,7 @@ class WebMvcConfig extends WebMvcConfigurerAdapter {
     registry.addResourceHandler("/**").addResourceLocations(CLASSPATH_RESOURCE_LOCATIONS: _*)
   }
 
-  override def configureDefaultServletHandling(configurer: DefaultServletHandlerConfigurer): Unit = {
-    configurer.enable
+  override def configureDefaultServletHandling(configure: DefaultServletHandlerConfigurer): Unit = {
+    configure.enable
   }
 }

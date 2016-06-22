@@ -22,6 +22,7 @@ object Build extends Build {
   val _springBootStarterWeb = "org.springframework.boot" % "spring-boot-starter-web" % verSpringBoot
   val _springBootStarterTest = "org.springframework.boot" % "spring-boot-starter-test" % verSpringBoot
   val _jacksonScalaModule = "com.fasterxml.jackson.module" %%  "jackson-module-scala" % verJacksonScalaModule
+  val _springBootStarterVelocity = "org.springframework.boot" % "spring-boot-starter-velocity" % verSpringBoot
 
 
   lazy val root = Project(projectName, file("."))
@@ -51,7 +52,8 @@ object Build extends Build {
       libraryDependencies ++= Seq(
         _springBootStarterWeb,
         _springBootStarterTest,
-        _jacksonScalaModule),
+        _jacksonScalaModule,
+        _springBootStarterVelocity),
 
 
       exportJars := true,
